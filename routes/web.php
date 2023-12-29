@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\auth\AuthController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\Authenticate;
@@ -28,10 +29,19 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('logout', 'logout')->name('logout');
 });
 
-Route::controller(ProfileController::class)->middleware(Authenticate::class)->group(function () {
-    Route::get('profile/show', 'show')->name('profile.show');
-    Route::patch('profile/details', 'details')->name('profile.details');
-    Route::patch('profile/password', 'password')->name('profile.password');
-});
+Route::middleware(Authenticate::class)->group(function () {
+    Route::controller(ProfileController::class)->prefix('profile')->name('profile.')->group(function () {
+        Route::get('show', 'show')->name('show');
+        Route::patch('details', 'details')->name('details');
+        Route::patch('password', 'password')->name('password');
+        Route::patch('picture', 'picture')->name('picture');
+    });
 
-Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware(Authenticate::class);
+    Route::controller(DashboardController::class)->group(function () {
+        Route::get('dashboard', 'index')->name('dashboard');
+    });
+
+    Route::controller(CategoryController::class)->group(function () {
+        Route::get('categories', 'index')->name('categories');
+    });
+});

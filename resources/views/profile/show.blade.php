@@ -103,14 +103,17 @@
                     <h5 class="card-title mb-0">Profile Picture</h5>
                 </div>
                 <div class="card-body text-center">
-                    <img src="{{ asset('template/img/avatars/avatar-4.jpg') }}" alt="Christina Mason"
-                        class="img-fluid rounded-circle mb-2" width="128" height="128" />
+                    <img src="{{ asset('template/img/photos/' . $user->picture) }}" alt="{{ $user->name }}" class="img-fluid rounded-circle mb-2" width="128"
+                        height="128" />
                     <div>
-                        <form action="" method="post">
+                        <form action="{{ route('profile.picture') }}" method="post" enctype="multipart/form-data">
                             @csrf
-                            {{-- @method("PATCH") --}}
+                            @method('PATCH')
                             <div class="mb-3">
-                                <input type="file" name="picture" id="picture" class="form-control">
+                                <input type="file" name="picture" id="picture" class="form-control @error('picture') is-invalid @enderror">
+                                @error('picture')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div>
