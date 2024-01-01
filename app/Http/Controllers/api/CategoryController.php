@@ -15,7 +15,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json([
+            'categories' => Category::where('user_id', '=', Auth::id())->get(),
+        ]);
     }
 
     /**
@@ -34,7 +36,7 @@ class CategoryController extends Controller
         } else {
             $data = [
                 'name' => $request->name,
-                'user_id' => 1,
+                'user_id' => Auth::id(),
             ];
 
             if (Category::create($data)) {
@@ -54,7 +56,9 @@ class CategoryController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return response()->json([
+            'category' => Category::find($id),
+        ]);
     }
 
     /**
