@@ -16,6 +16,12 @@
                     <i class="align-middle" data-feather="book"></i> <span class="align-middle">Categories</span>
                 </a>
             </li>
+
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="{{ route('contacts') }}">
+                    <i class="align-middle" data-feather="book"></i> <span class="align-middle">Contacts</span>
+                </a>
+            </li>
         </ul>
     </div>
 </nav>
