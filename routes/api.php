@@ -23,4 +23,6 @@ Route::controller(CategoryController::class)->group(function () {
     Route::get('categories', 'index')->name('api.categories');
     Route::post('category/create', 'store')->name('api.category.create');
     Route::get('category/{id}/show', 'show')->name('api.category.show');
+    Route::patch('category/{id}/edit', 'update')->name('api.category.edit');
+    Route::delete('category/{id}/destroy', 'destroy')->name('api.category.destroy');
 });

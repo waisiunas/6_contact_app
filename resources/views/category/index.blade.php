@@ -17,7 +17,9 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-body" id="response">
+                <div class="card-body">
+                    <div id="alert"></div>
+                    <div id="response"></div>
                     {{-- <table class="table table-bordered m-0">
                         <thead>
                             <tr>
@@ -63,6 +65,8 @@
     <script>
         const showAllAPIURL = @json(route('api.categories'));
         const showSingleAPIURL = @json(route('api.category.show', ['id' => ':id']));
+        const editAPIURL = @json(route('api.category.edit', ['id' => ':id']));
+        const deleteAPIURL = @json(route('api.category.destroy', ['id' => ':id']));
     </script>
     <script src="{{ asset('template/js/custom.js') }}"></script>
 @endsection

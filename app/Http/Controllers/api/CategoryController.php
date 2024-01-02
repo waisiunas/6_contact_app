@@ -66,7 +66,31 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => ['required'],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->messages(),
+            ]);
+        } else {
+            $data = [
+                'name' => $request->name,
+            ];
+
+            $category = Category::find($id);
+
+            if ($category->update($data)) {
+                return response()->json([
+                    'success' => 'Magic has been spelled!',
+                ]);
+            } else {
+                return response()->json([
+                    'failure' => 'Magic has failed to spell!'
+                ]);
+            }
+        }
     }
 
     /**
@@ -74,6 +98,16 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $category = Category::find($id);
+
+        if ($category->delete()) {
+            return response()->json([
+                'success' => 'Magic has been spelled!',
+            ]);
+        } else {
+            return response()->json([
+                'failure' => 'Magic has failed to spell!'
+            ]);
+        }
     }
 }

@@ -46,6 +46,7 @@ addFormElement.addEventListener("submit", async function (e) {
         } else if (result.success) {
             addAlertElement.innerHTML = alert(result.success, "success");
             addNameElement.value = "";
+            showCategories();
         } else {
             addAlertElement.innerHTML = alert("Something went wrong!");
         }
@@ -71,7 +72,7 @@ async function showCategories() {
                     Edit
                 </button>
 
-                <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                <button type="button" class="btn btn-danger" onclick="deleteCategory(${category.id})" data-bs-toggle="modal"
                     data-bs-target="#deleteModal">
                     Delete
                 </button>
@@ -97,7 +98,10 @@ async function showCategories() {
     }
 }
 
+let editId = "";
+
 async function editCategory(id) {
+    editId = id;
     const apiUrl = showSingleAPIURL.replace(':id', id);
     const response = await fetch(apiUrl);
     const result = await response.json();
@@ -109,9 +113,105 @@ async function editCategory(id) {
 const editFormElement = document.querySelector("#edit-form");
 const editAlertElement = document.querySelector("#edit-alert");
 
-editFormElement.addEventListener("submit", function (e) {
+editFormElement.addEventListener("submit", async function (e) {
+    const APIURL = editAPIURL.replace(':id', editId);
     e.preventDefault();
+
+    const editNameElement = document.querySelector("#edit-name");
+
+    let editNameValue = editNameElement.value;
+
+    if (editNameValue == "") {
+        editNameElement.classList.add('is-invalid');
+        editAlertElement.innerHTML = alert("Provide the category name!");
+    } else {
+        editNameElement.classList.remove('is-invalid');
+        editAlertElement.innerHTML = "";
+
+        const token = document.querySelector("input[name='_token']").value;
+
+        const data = {
+            name: editNameValue,
+            _token: token,
+        };
+
+        const response = await fetch(APIURL, {
+            method: "PATCH",
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        const result = await response.json();
+
+        const errors = result.errors;
+        if (errors) {
+            if (errors.name) {
+                editNameElement.classList.add('is-invalid');
+                editAlertElement.innerHTML = alert(errors.name);
+            }
+        } else if (result.failure) {
+            editAlertElement.innerHTML = alert(result.failure);
+        } else if (result.success) {
+            editAlertElement.innerHTML = alert(result.success, "success");
+            showCategories();
+        } else {
+            editAlertElement.innerHTML = alert("Something went wrong!");
+        }
+    }
 });
+
+let deleteId = "";
+
+function deleteCategory(id) {
+    deleteId = id;
+}
+
+const deleteFormElement = document.querySelector("#delete-form");
+
+deleteFormElement.addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const APIURL = deleteAPIURL.replace(':id', deleteId);
+
+    const token = document.querySelector("input[name='_token']").value;
+
+    const data = {
+        _token: token,
+    };
+
+    const response = await fetch(APIURL, {
+        method: "DELETE",
+        body: JSON.stringify(data),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    const result = await response.json();
+
+    const alertElement = document.querySelector("#alert");
+
+    if (result.failure) {
+        alertElement.innerHTML = alert(result.failure);
+    } else if (result.success) {
+        alertElement.innerHTML = alert(result.success, "success");
+        showCategories();
+        closeDeleteModal()
+    } else {
+        alertElement.innerHTML = alert("Something went wrong!");
+    }
+});
+
+function closeDeleteModal() {
+    const deleteModalElement = document.querySelector('#deleteModal');
+    deleteModalElement.style.display = 'none';
+    deleteModalElement.classList.remove('show');
+    document.body.classList.remove('modal-open');
+    const modalBackdrop = document.querySelector('.modal-backdrop');
+    if (modalBackdrop) {
+        modalBackdrop.parentNode.removeChild(modalBackdrop);
+    }
+}
 
 function alert(msg, cls = "danger") {
     return `<div class="alert alert-${cls} alert-dismissible fade show" role="alert">
