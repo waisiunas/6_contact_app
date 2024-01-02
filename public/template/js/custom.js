@@ -196,20 +196,18 @@ deleteFormElement.addEventListener("submit", async function (e) {
     } else if (result.success) {
         alertElement.innerHTML = alert(result.success, "success");
         showCategories();
-        closeDeleteModal()
+        closeDeleteModal();
     } else {
         alertElement.innerHTML = alert("Something went wrong!");
     }
 });
 
 function closeDeleteModal() {
-    const deleteModalElement = document.querySelector('#deleteModal');
-    deleteModalElement.style.display = 'none';
-    deleteModalElement.classList.remove('show');
-    document.body.classList.remove('modal-open');
-    const modalBackdrop = document.querySelector('.modal-backdrop');
-    if (modalBackdrop) {
-        modalBackdrop.parentNode.removeChild(modalBackdrop);
+    const modalElement = document.querySelector('#deleteModal');
+    const modal = bootstrap.Modal.getInstance(modalElement);
+
+    if (modal) {
+        modal.hide();
     }
 }
 
