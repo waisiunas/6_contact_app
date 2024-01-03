@@ -19,10 +19,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::controller(CategoryController::class)->group(function () {
-    Route::get('categories', 'index')->name('api.categories');
-    Route::post('category/create', 'store')->name('api.category.create');
-    Route::get('category/{id}/show', 'show')->name('api.category.show');
-    Route::patch('category/{id}/edit', 'update')->name('api.category.edit');
-    Route::delete('category/{id}/destroy', 'destroy')->name('api.category.destroy');
+Route::controller(CategoryController::class)->name('api.')->group(function () {
+    Route::get('categories', 'index')->name('categories');
+    Route::prefix('category')->group(function () {
+        Route::post('create', 'store')->name('category.create');
+        Route::get('{id}/show', 'show')->name('category.show');
+        Route::patch('{id}/edit', 'update')->name('category.edit');
+        Route::delete('{id}/destroy', 'destroy')->name('category.destroy');
+    });
 });

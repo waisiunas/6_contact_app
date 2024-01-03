@@ -8,7 +8,7 @@
             <h1 class="h3 mb-3">Categories</h1>
         </div>
         <div class="col-6 text-end">
-            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addModal">
+            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addModal" onclick="clearAddModal()">
                 Add Category
             </button>
         </div>

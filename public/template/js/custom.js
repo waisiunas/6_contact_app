@@ -101,6 +101,7 @@ async function showCategories() {
 let editId = "";
 
 async function editCategory(id) {
+    clearEditModal();
     editId = id;
     const apiUrl = showSingleAPIURL.replace(':id', id);
     const response = await fetch(apiUrl);
@@ -216,4 +217,14 @@ function alert(msg, cls = "danger") {
             ${msg}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>`;
+}
+
+function clearAddModal() {
+    document.querySelector("#add-name").classList.remove("is-invalid");
+    addAlertElement.innerText = "";
+}
+
+function clearEditModal() {
+    document.querySelector("#edit-name").classList.remove("is-invalid");
+    editAlertElement.innerText = "";
 }

@@ -21,12 +21,8 @@
                     </a>
                     <form action="{{ route('logout') }}" method="post">
                         @csrf
-                        <input type="submit" value="Logout" class="dropdown-item">
+                        <button type="submit" class="dropdown-item"><i class="align-middle me-1" data-feather="log-out"></i> Logout</button>
                     </form>
-                    {{-- <a class="dropdown-item" href="{{ route('logout') }}">
-                        <i class="align-middle me-1" data-feather="log-out"></i>
-                        Log out
-                    </a> --}}
                 </div>
             </li>
         </ul>

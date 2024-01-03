@@ -16,9 +16,37 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <div id="alert"></div>
-                    <div id="response"></div>
+                    @if (count($contacts) > 0)
+                        <table class="table table-bordered m-0">
+                            <thead>
+                                <tr>
+                                    <th>Sr. No.</th>
+                                    <th>Name</th>
+                                    <th>Mobile</th>
+                                    <th>Email</th>
+                                    <th>Category</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
 
+                            <tbody>
+                                @foreach ($contacts as $contact)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $contact->first_name . $contact->last_name }}</td>
+                                        <td>{{ $contact->mobile_number }}</td>
+                                        <td>{{ $contact->email }}</td>
+                                        <td>{{ $contact->category->name }}</td>
+                                        <td>
+                                            <a href="" class="btn btn-primary">Show</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    @else
+                        <div class="alert alert-info mb-0">No record found!</div>
+                    @endif
                 </div>
             </div>
         </div>
