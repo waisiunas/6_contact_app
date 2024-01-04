@@ -4,6 +4,7 @@ use App\Http\Controllers\auth\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\deleted\ContactController as DeletedContactController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\RedirectIfAuthenticated;
@@ -56,6 +57,14 @@ Route::middleware(Authenticate::class)->group(function () {
             Route::patch('{contact}/edit', 'update');
             Route::patch('{contact}/picture', 'picture')->name('picture');
             Route::delete('{contact}/destroy', 'destroy')->name('destroy');
+        });
+    });
+
+    Route::controller(DeletedContactController::class)->group(function () {
+        Route::get('contacts/deleted', 'index')->name('deleted.contacts');
+        Route::prefix('contact')->name('contact.')->group(function () {
+            Route::patch('{id}/restore', 'restore')->name('restore');
+            Route::delete('{id}/delete', 'delete')->name('delete');
         });
     });
 });
