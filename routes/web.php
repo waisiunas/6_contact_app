@@ -53,6 +53,8 @@ Route::middleware(Authenticate::class)->group(function () {
             Route::post('create', 'store');
             Route::get('{contact}/show', 'show')->name('show');
             Route::get('{contact}/edit', 'edit')->name('edit');
+            Route::patch('{contact}/edit', 'update');
+            Route::patch('{contact}/picture', 'picture')->name('picture');
             Route::delete('{contact}/destroy', 'destroy')->name('destroy');
         });
     });

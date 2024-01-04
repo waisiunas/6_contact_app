@@ -16,6 +16,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
+                    @include('partials.alerts')
                     @if (count($contacts) > 0)
                         <table class="table table-bordered m-0">
                             <thead>

@@ -4,7 +4,14 @@
 
 @section('content')
     <div class="mb-3">
-        <h1 class="h3 d-inline align-middle">Contact</h1>
+        <div class="row">
+            <div class="col-6">
+                <h1 class="h3 mb-3">Contact</h1>
+            </div>
+            <div class="col-6 text-end">
+                <a href="{{ route('contacts') }}" class="btn btn-outline-primary">Back</a>
+            </div>
+        </div>
     </div>
 
     <div class="card">
@@ -12,7 +19,7 @@
             <div class="text-center">
                 <div id="picture-section">
                     @if ($contact->picture)
-                        <img src="{{ asset('template/img/contacts/') . $contact->picture }}" alt="Placeholder picture"
+                        <img src="{{ asset('template/img/contacts/' . $contact->picture) }}" alt="Placeholder picture"
                             class="img-fluid rounded-circle mb-2" width="200" height="200" />
                     @else
                         <img src="https://ui-avatars.com/api/?name={{ $contact->first_name }}+{{ $contact->last_name }}"
@@ -70,6 +77,15 @@
                     <hr>
                     <div class="row">
                         <div class="col-4">
+                            Category:
+                        </div>
+                        <div class="col-8">
+                            {{ $contact->category->name }}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-4">
                             DoB:
                         </div>
                         <div class="col-8">
@@ -88,7 +104,11 @@
                     <hr>
                     <div>
                         <a href="{{ route('contact.edit', $contact) }}" class="btn btn-primary">Edit</a>
-                        <button type="button" class="btn btn-danger">Delete</button>
+                        <form action="{{ route('contact.destroy', $contact) }}" method="post" class="d-inline">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
                     </div>
                 </div>
 
