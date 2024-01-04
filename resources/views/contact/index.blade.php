@@ -38,7 +38,7 @@
                                         <td>{{ $contact->email }}</td>
                                         <td>{{ $contact->category->name }}</td>
                                         <td>
-                                            <a href="" class="btn btn-primary">Show</a>
+                                            <a href="{{ route('contact.show', $contact) }}" class="btn btn-primary">Show</a>
                                         </td>
                                     </tr>
                                 @endforeach

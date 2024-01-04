@@ -51,6 +51,9 @@ Route::middleware(Authenticate::class)->group(function () {
         Route::prefix('contact')->name('contact.')->group(function () {
             Route::get('create', 'create')->name('create');
             Route::post('create', 'store');
+            Route::get('{contact}/show', 'show')->name('show');
+            Route::get('{contact}/edit', 'edit')->name('edit');
+            Route::delete('{contact}/destroy', 'destroy')->name('destroy');
         });
     });
 });

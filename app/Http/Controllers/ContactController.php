@@ -14,7 +14,8 @@ class ContactController extends Controller
      */
     public function index()
     {
-        $contacts = Auth::user()->categories->pluck('contacts')->flatten();
+        // $contacts = Auth::user()->categories->pluck('contacts')->flatten();
+        $contacts = Auth::user()->contacts;
 
         return view('contact.index', [
             'contacts' => $contacts,
@@ -80,7 +81,9 @@ class ContactController extends Controller
      */
     public function show(Contact $contact)
     {
-        return 'single-contact';
+        return view('contact.show', [
+            'contact' => $contact,
+        ]);
     }
 
     /**
@@ -88,7 +91,9 @@ class ContactController extends Controller
      */
     public function edit(Contact $contact)
     {
-        return 'edit-form';
+        return view('contact.edit', [
+            'categories' => Category::all()
+        ]);
     }
 
     /**

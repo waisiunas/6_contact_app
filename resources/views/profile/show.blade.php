@@ -7,7 +7,7 @@
         <h1 class="h3 d-inline align-middle">Profile</h1>
     </div>
     <div class="row">
-        <div class="col-md-8 col-xl-9">
+        <div class="col-md-7 col-xl-8">
             <div class="card">
                 <div class="card-header">
                     <h5 class="card-title mb-0">Profile Details</h5>
@@ -97,20 +97,27 @@
             </div>
         </div>
 
-        <div class="col-md-4 col-xl-3">
+        <div class="col-md-5 col-xl-4">
             <div class="card mb-3">
                 <div class="card-header">
                     <h5 class="card-title mb-0">Profile Picture</h5>
                 </div>
                 <div class="card-body text-center">
-                    <img src="{{ asset('template/img/photos/' . $user->picture) }}" alt="{{ $user->name }}" class="img-fluid rounded-circle mb-2" width="128"
-                        height="128" />
+                    @if ($user->picture)
+                        <img src="{{ asset('template/img/photos/' . $user->picture) }}" alt="{{ $user->name }}"
+                            class="img-fluid rounded-circle mb-2" width="128" height="128" />
+                    @else
+                        <img src="https://ui-avatars.com/api/?name={{ $user->name }}"
+                            alt="Placeholder picture" class="img-fluid rounded-circle mb-2" width="128" height="128" />
+                    @endif
+
                     <div>
                         <form action="{{ route('profile.picture') }}" method="post" enctype="multipart/form-data">
                             @csrf
                             @method('PATCH')
                             <div class="mb-3">
-                                <input type="file" name="picture" id="picture" class="form-control @error('picture') is-invalid @enderror">
+                                <input type="file" name="picture" id="picture"
+                                    class="form-control @error('picture') is-invalid @enderror">
                                 @error('picture')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror

@@ -47,4 +47,9 @@ class User extends Authenticatable
     public function categories () {
         return $this->hasMany(Category::class);
     }
+
+    public function contacts()
+    {
+        return $this->hasManyThrough(Contact::class, Category::class);
+    }
 }
