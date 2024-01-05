@@ -34,17 +34,19 @@
                                 @foreach ($contacts as $contact)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $contact->first_name . $contact->last_name }}</td>
+                                        <td>{{ $contact->first_name . ' ' . $contact->last_name }}</td>
                                         <td>{{ $contact->mobile_number }}</td>
                                         <td>{{ $contact->email }}</td>
                                         <td>{{ $contact->category->name }}</td>
                                         <td>
-                                            <form action="{{ route('contact.restore', $contact->id) }}" method="post" class="d-inline">
+                                            <form action="{{ route('contact.restore', $contact->id) }}" method="post"
+                                                class="d-inline">
                                                 @csrf
                                                 @method('PATCH')
                                                 <input type="submit" value="Recover" class="btn btn-primary">
                                             </form>
-                                            <form action="{{ route('contact.delete', $contact->id) }}" method="post" class="d-inline">
+                                            <form action="{{ route('contact.delete', $contact->id) }}" method="post"
+                                                class="d-inline">
                                                 @csrf
                                                 @method('DELETE')
                                                 <input type="submit" value="Delete" class="btn btn-danger">
@@ -61,7 +63,4 @@
             </div>
         </div>
     </div>
-
-    @include('partials.modals')
-
 @endsection
