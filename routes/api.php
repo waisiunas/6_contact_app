@@ -15,11 +15,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::middleware('web')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::controller(CategoryController::class)->name('api.')->group(function () {
+Route::controller(CategoryController::class)->middleware('web')->name('api.')->group(function () {
     Route::get('categories', 'index')->name('categories');
     Route::prefix('category')->group(function () {
         Route::post('create', 'store')->name('category.create');
